@@ -35,11 +35,45 @@ class: center, middle
 
 # Introduction
 
+```terminal 
+lrnv@laptop prez_yrd_git $ git lg
+* <span style="color:yellow;">b9f0b51</span><span style="color:yellow;"> (</span><span style="font-weight:bold;color:aqua;">HEAD -&gt; </span><span style="font-weight:bold;color:lime;">master</span><span style="color:yellow;">)</span> First commit <span style="font-weight:bold;color:#3333FF;">Oskar Laverny </span><span style="color:lime;">34 minutes ago (2023-01-10)</span>
+```
+
+```terminal 
+lrnv@laptop prez_yrd_git $ git status
+On branch master
+Changes not staged for commit:
+  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
+  (use &quot;git restore &lt;file&gt;...&quot; to discard changes in working directory)
+	<span style="color:red;">modified:   index.html</span>
+
+Untracked files:
+  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+	<span style="color:red;">aha/</span>
+	<span style="color:red;">terminal.language.js</span>
+
+no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)
+
+```
+
     </textarea>
     <script src="https://remarkjs.com/downloads/remark-latest.min.js">
     </script>
-    <script>
-      var slideshow = remark.create();
+    <script type="text/javascript">
+        var hljs = remark.highlighter.engine;
+    </script>
+    <script src="terminal.language.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    var slideshow = remark.create({
+        highlightStyle: 'monokai'
+    });
+    // extract the embedded styling from ansi spans
+    var highlighted = document.querySelectorAll("code.terminal span.hljs-ansi");
+    Array.prototype.forEach.call(highlighted, function(next) {
+        next.insertAdjacentHTML("beforebegin", next.textContent);
+        next.parentNode.removeChild(next);
+    });
     </script>
   </body>
 </html>
