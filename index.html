@@ -21,42 +21,499 @@
 
 class: center, middle
 
-# Title
+# Version control for academics
+#### *or*
+### Git: from the kernel to reproducible research
+#### Oskar Laverny @ YRD
+Feb. 17, 2023
 
 ---
 
-# Agenda
+# Version Control ? 
 
-1. Introduction
-2. Deep-dive
-3. ...
+<script>
+  remark.macros.scale = function (percentage) {
+  var url = this;
+  return '<img src="' + url + '" style="width: ' + percentage + '" />';
+};
+</script>
+
+<style>
+  .row {
+  display: flex;
+}
+
+.column {
+  flex: 50%;
+}
+</style>
+
+<div class="row">
+  <div class="column">
+    <img src="img/phdcomics.gif" alt="Piled Higher and Deeper by Jorge Cham. Source: www.phdcomics.com" style="width: 80%" />
+  </div>
+  <div class="column">    "Primitive" version controls are manual (and thus error-prone), but quite common: <br /><br />
+    1. When working on a project, you need some kind of history of what you did<br /><br />
+    2. Being able to roll back and forth between versions is nice<br /><br />
+    3. Collaboration is a mandatory feature<br /><br />
+    => You need some kind of version control system. <br /><br /><br />
+  
+  </div>
+</div>
+
+???
+
+# Teasing comic but true
+
+# Makes it difficult to go back and find the change you want, understand what happend, and collaborate with others. 
+
+# Collaboration : future you.
+
+# Raise hands if experience with git or other version controls systems ? 
 
 ---
 
-# Introduction
 
-```terminal 
-lrnv@laptop prez_yrd_git $ git lg
-* <span style="color:yellow;">0dd39f1</span><span style="color:yellow;"> (</span><span style="font-weight:bold;color:aqua;">HEAD -&gt; </span><span style="font-weight:bold;color:lime;">master</span><span style="color:yellow;">)</span> Added highlighting of console outputs <span style="font-weight:bold;color:#3333FF;">Oskar Laverny </span><span style="color:lime;">2 minutes ago (2023-01-10)</span>
-* <span style="color:yellow;">e156393</span> First commit with slides <span style="font-weight:bold;color:#3333FF;">Oskar Laverny </span><span style="color:lime;">4 minutes ago (2023-01-10)</span>
+# Why version control 
+
+A Version Control System (VCS) is a system that **keeps track of changes made to a collection of files or folder**. Such systems usually facilitate collaborations. 
+
+Data is tracked as a list of **snapshots**, which also contains **metadata**.
+
+Why is it usefull :
+- Permits collaborative development
+- Efficient for all projects sizes
+- Automatically answer hard questions : who, when, why ? bisection ? 
+- **Allows you to revert any changes and go back to a previous state**
+- **Allows you to maintain several concurrent versions of the same code**
+
+
+**Remark**: Mailing is a valid but very manual VCS. 
+
+???
+
+# Mailing around .pdf's (keeping 3 or 4 of them, timestamped)
+# red pen + scan
+# manual update of .tex
+
+
+
+# Exemple of parallell developpement. 
+
+- I send my current `paper.tex` to my co-author.
+- My co-author might be working on it for a while, so we agree to work on different parts (maybe for a while I work on chapter 2 while he works on chapter 1)
+- I spot a typo in his part: cannot fix it directly.. 
+- When we want to merge, we cannot always be sure that we took all modifications from everyone... and it takes a while. 
+
+- Author A sends version 1 to author B. 
+- Author B spot a typo (a) in the abstract, while working on section 2. 
+- Author A works on Section 1
+- When merging, typo (a) is missed by author A. 
+- typo (a) has been fixed once but is still there. 
+- Author B is pissed because he see the typo again and thinks his input is not valued enough. 
+- Author B leaves the project
+- Author A lies and cries. 
+
+---
+
+
+
+
+# Version control and reproducible research
+
+As academics, our work usually outputs a lot of text files:
+- Main content as .tex files (definitions, theorems, proofs, etc..)
+- References as .bib file
+- Data as .csv file 
+- Source code that analyze data and produces graphs and tables
+- The code of the algorithm you develop, if any. 
+
+**Reproducibility:** Requires you to provide a way for others to... reproduce your results. 
+
+**A version control system would allows others to understand how the current result was made**, and therefore faciliate drastically the reproduction of your results.
+
+???
+
+# You know how you made stuff, you dont need to be able to get back. Others do not. 
+# Consider future-you as someone else. 
+
+---
+
+# Classical motivations :
+
+A yes to one of these questions means you probably need VCS: 
+
+- Did you ever struggle to reproduce results (including yours) ? 
+- Do you usually hold several versions of the same work ? 
+- Do you ever modify a copy to keep the orginal safe *just in case* ? 
+- Did you ever deleted work and wish you had not ? 
+
+Good reasons to use version control:
+
+- **Transparency** of work done
+- **Better organization** of files and folder and easy to keep track of changes.
+- **Easy collaboration** (no need to mail things around).
+- **Ensure reproducibility** of your work by anyone else (including future-you, your best collaborator)
+- **Huge potential for automation** *we'll discuss that later* 
+
+
+**You should consider your work as a code base.** 
+- An academic project is **a set of changes made to a set of text files**.
+- Very close to a software project (different content of files). <br /><b>=></b> Tools from software engineers are applicable to academic work. 
+
+
+---
+
+# Git: the defacto standard VCS. 
+
+<div class="row">
+  <div class="column">
+    <img src="img/git.png" alt="XKCD Comic" style="width: 90%" />
+  </div>
+  <div class="column"> 
+
+    1. Git was created in 2005 by Linus Torvalds to manage the kernel's code.<br /><br />
+    2. <a href=https://insights.stackoverflow.com/survey/2021#overview>SODS2021</a> : 94% of devs use git. <br /><br />
+    3. Github has <a href="https://webtribunal.net/blog/github-statistics/">over 200M repo from 73M users in 337 languages</a>, holding the humanity code legacy.<br /><br /><br />
+    
+    
+    <b>Today's program:</b>  <br /><br />
+    I. Bottom-up introduction to Git<br /><br />
+    II. Examples of application to academic work<br /><br />
+  </div>
+</div>
+
+???
+
+# read it out loud. 
+# Raise hands if you already did that. 
+
+# Our goal : make sure you dont have to anymore; 
+
+# Git interface = leaky abstraction, learning top-down is not very good. Avoid to follow the approach of the comic. 
+
+# Underlying design and ideas can be understood, instead of memorizing the interface. You'll understand what the commands do by understanding what they do to the data model. 
+
+
+---
+
+# Git's data model
+
+A git **repository** is a collection of files and folders in a directory, here called **(root)**. A sample directory might look like that: 
+
+```
+(root) (tree)
+  |
+  |- analysis (tree)
+  |  |
+  |  | data.csv (blob)
+  |  | script.jl (blob)
+  |
+  |- bibliograpy.bib (blob)
+  |- paper.tex (blob)
+  |- makefile (blob)
+  |
 ```
 
-```terminal 
-lrnv@laptop prez_yrd_git $ git status
-On branch master
-Changes not staged for commit:
-  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
-  (use &quot;git restore &lt;file&gt;...&quot; to discard changes in working directory)
-	<span style="color:red;">modified:   index.html</span>
+Folders are called **trees**, files are called **blobs**.
 
-Untracked files:
-  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
-	<span style="color:red;">aha/</span>
-	<span style="color:red;">terminal.language.js</span>
+The data structure is **recursive** : trees can contain other trees and blobs.
 
-no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)
+Snapshots in git are called **commit**s. They have metadata attached to them : 
+- Author
+- Description
+- Date
+- etc...
+
+---
+
+# Git's history model
+
+Git models history as a Directed acyclic graph (DAG). Each snapshot, encapsulating the whole set of files and folders, is timestamped and metadata are added. One metadata is the **parent** snapshot. 
+
+Linear history : 
 
 ```
+O <-- O <-- O
+```
+
+Non-Linear history : You can work on diferent things in paralel via branches
+```
+O <-- O <-- O <-- O (you add a missing proof)
+            ^
+             \
+              --- O <-- O (your coauthor fixes a notation)
+```
+
+Branches can then be merged:
+```
+O <-- O <-- O <-- O <---- O (both the proof and the notation fix are included)
+            ^            /
+             \          v
+              --- O <-- O
+```
+
+???
+
+# o are commits (snapshots), and arrows are parenting. 
+# commits can have more than one parent.
+# branches can be merged...
+# Merging can create errors: In many cases, marge conflicts are handled automatically, but if it cannot it would report a merge conflict and leave it up to you, it has tools to facilitate this. 
+
+---
+
+# Pseudo-implementation 
+
+We can implement the git data model quite easily. 
+
+A file is just of bunch of bytes : 
+```julia
+Blob = Vector{Byte}
+```
+A directory contains named files and directories
+```julia
+Tree = Dict{String,Union{Tree,Blob}}
+```
+A commit has parents, metadata, and the top-level tree
+```julia
+struct Commit
+    parent::Vector{Commit} # might be empty 
+    author::String
+    message::String
+    snapshot::Tree
+end
+```
+
+This is a clean way to model history. 
+
+---
+
+# Objects and content-adressing 
+
+An **object** is a blob, tree or commit. 
+
+```julia
+Object = Union{Blob,Tree,Commit}
+```
+
+Objects are **content-addressed**. What git maintains on disc is a store of objects with names : 
+
+```julia
+# The main git store: 
+objects = Dict{String, Object}() # we initialize it empty. 
+```
+
+where the keys are the sha1-hashes of the objects:
+
+```julia
+function store!(objects,o)
+    id = sha1(o)
+    objects[id] = o
+end
+
+function load(objects,id)
+    return objects[id]
+end
+```
+
+???
+
+Rq : hash functon turn a big piece of data into a small string. They give you a way to name a thing deterministically on the content of the thing. 
+
+Rq : git implementation is mostly C, and some bash and perl scripts. 
+
+Blobs, trees and commits are unified: they are all objects.
+
+Looks like commits contains a lot of other comits, but everything is referenced by id (pointers) for efficiency: each object is stored on its own and refereces the others by their sha1-hash. 
+
+---
+
+## e156393cef8b62f30d58ca0eb37bf7a75221471e
+
+A **Sha1 hash** is a hexadecimal string of 40 characters, such as `e156393...71e`.
+
+- Sha1 is a **cryptographic hash function**: it is deterministic but chaotic
+- Gives a "unique" identifier to a commit, which is in "bijection" with its content.
+
+Sha1 names are really inconvenient. Thus git maintains a set of references: 
+
+```julia
+references = Dict{String,String}() # maps readable human names to sha1 hashes. 
+```
+
+For exemple : `fix_bug_in_proof => e156393...71e`
+
+We can now **refer to things by name** in the commit graph. 
+
+**Remark**: The actual commit graph is immutable, but references are mutable. You can move the `fix_bug_in_proof` reference (while you cannot change hashes of already-done commits). 
+
+Rq : One special reference, **HEAD**, tracks where we currently are; 
+
+---
+
+# Example 1
+
+All git commands make additions to the DAG and/or modifications to the references: 
+
+```terminal 
+git commit
+git checkout
+git branch
+git merge
+```
+
+```
+---------------------------------------------------
+O <-- O <-- O (HEAD -> master)
+--------------------------------------------------- git commit
+O <-- O <-- O <-- O (HEAD -> master)
+--------------------------------------------------- git branch; git checkout; git commit x2
+O <-- O <-- O <-- O (master)
+            ^            
+             \          
+              --- O <-- O (HEAD -> bugfix)
+--------------------------------------------------- git checkout; git merge
+O <-- O <-- O <-- O <---- O (HEAD -> master)
+            ^            /
+             \          v
+              --- O <-- O (bugfix)
+---------------------------------------------------
+```
+
+???
+
+Draw a graph on the board: 
+
+few commits and few references. 
+
+---
+
+
+
+
+# Ex. 2: The templating problem (1/3)
+
+Say we finished working on a paper. 
+```terminal 
+lrnv@laptop paper $ git lg
+* <span style="color:yellow;">b9f1617</span><span style="color:yellow;"> (</span><span style="font-weight:bold;color:aqua;">HEAD -&gt; </span><span style="font-weight:bold;color:lime;">master</span><span style="color:yellow;">, </span><span style="font-weight:bold;color:yellow;">tag: v1.0</span><span style="color:yellow;">)</span> Fix a typo <span style="font-weight:bold;color:#3333FF;">Oskar Laverny </span><span style="color:lime;">3 minutes ago (2023-01-12)</span>
+* <span style="color:yellow;">3cb7e6c</span> Add proof of main Thm <span style="font-weight:bold;color:#3333FF;">Oskar Laverny </span><span style="color:lime;">4 minutes ago (2023-01-12)</span>
+* <span style="color:yellow;">88d916e</span> Add definition of XX <span style="font-weight:bold;color:#3333FF;">Oskar Laverny </span><span style="color:lime;">4 minutes ago (2023-01-12)</span>
+* <span style="color:yellow;">147a080</span> First commit <span style="font-weight:bold;color:#3333FF;">Oskar Laverny </span><span style="color:lime;">5 minutes ago (2023-01-12)</span>
+```
+
+The current verison, tagged `v1.0`, will be the version we push to `arXiv` and send to review. But the paper requires that we send a version to review with specific notations, templating, etc... **Use a branch:**
+
+```terminal 
+lrnv@laptop paper $ git checkout -b templating
+Switched to a new branch 'templating'
+```
+
+Now do stuff in that branch to comply with the requirements of the journal, and comit them. 
+---
+# Ex. 2: The templating problem (2/3)
+
+```terminal 
+lrnv@laptop paper $ git lg
+* <span style="color:yellow;">d380354</span><span style="color:yellow;"> (</span><span style="font-weight:bold;color:aqua;">HEAD -&gt; </span><span style="font-weight:bold;color:lime;">templating</span><span style="color:yellow;">)</span> Comply with journal's XX template <span style="font-weight:bold;color:#3333FF;">Oskar Laverny </span><span style="color:lime;">18 seconds ago (2023-01-12)</span>
+* <span style="color:yellow;">b9f1617</span><span style="color:yellow;"> (</span><span style="font-weight:bold;color:yellow;">tag: v1.0</span><span style="color:yellow;">, </span><span style="font-weight:bold;color:lime;">master</span><span style="color:yellow;">)</span> Fix a typo <span style="font-weight:bold;color:#3333FF;">Oskar Laverny </span><span style="color:lime;">8 minutes ago (2023-01-12)</span>
+* <span style="color:yellow;">3cb7e6c</span> Add proof of main Thm <span style="font-weight:bold;color:#3333FF;">Oskar Laverny </span><span style="color:lime;">8 minutes ago (2023-01-12)</span>
+* <span style="color:yellow;">88d916e</span> Add definition of XX <span style="font-weight:bold;color:#3333FF;">Oskar Laverny </span><span style="color:lime;">9 minutes ago (2023-01-12)</span>
+* <span style="color:yellow;">147a080</span> First commit <span style="font-weight:bold;color:#3333FF;">Oskar Laverny </span><span style="color:lime;">10 minutes ago (2023-01-12)</span>
+```
+
+Now we send the version from the `templating` branch to the journal. While they revise is, we find some error in the paper. We need to fix the mistake in all the versions, right ? 
+
+```terminal 
+* <span style="color:yellow;">fde936d</span><span style="color:yellow;"> (</span><span style="font-weight:bold;color:aqua;">HEAD -&gt; </span><span style="font-weight:bold;color:lime;">master</span><span style="color:yellow;">)</span> Fix error about XXX <span style="font-weight:bold;color:#3333FF;">Oskar Laverny </span><span style="color:lime;">23 seconds ago (2023-01-12)</span>
+<span style="color:red;">|</span> * <span style="color:yellow;">d380354</span><span style="color:yellow;"> (</span><span style="font-weight:bold;color:lime;">templating</span><span style="color:yellow;">)</span> Comply with journal's XX template <span style="font-weight:bold;color:#3333FF;">Oskar Laverny </span><span style="color:lime;">4 minutes ago (2023-01-12)</span>
+<span style="color:red;">|</span><span style="color:red;">/</span>  
+* <span style="color:yellow;">b9f1617</span><span style="color:yellow;"> (</span><span style="font-weight:bold;color:yellow;">tag: v1.0</span><span style="color:yellow;">)</span> Fix a typo <span style="font-weight:bold;color:#3333FF;">Oskar Laverny </span><span style="color:lime;">11 minutes ago (2023-01-12)</span>
+* <span style="color:yellow;">3cb7e6c</span> Add proof of main Thm <span style="font-weight:bold;color:#3333FF;">Oskar Laverny </span><span style="color:lime;">12 minutes ago (2023-01-12)</span>
+* <span style="color:yellow;">88d916e</span> Add definition of XX <span style="font-weight:bold;color:#3333FF;">Oskar Laverny </span><span style="color:lime;">12 minutes ago (2023-01-12)</span>
+* <span style="color:yellow;">147a080</span> First commit <span style="font-weight:bold;color:#3333FF;">Oskar Laverny </span><span style="color:lime;">13 minutes ago (2023-01-12)</span>
+```
+
+---
+
+# Ex. 2: The templating problem (3/3)
+
+```terminal 
+lrnv@laptop paper $ git checkout templating
+Switched to brnanch 'templating'
+lrnv@laptop paper $ git rebase master
+Successfully rebased and updated refs/heads/templating.
+lrnv@laptop paper $ git lg 
+* <span style="color:yellow;">b9faeb0</span><span style="color:yellow;"> (</span><span style="font-weight:bold;color:aqua;">HEAD -&gt; </span><span style="font-weight:bold;color:lime;">templating</span><span style="color:yellow;">)</span> Comply with journal's XX template  <span style="font-weight:bold;color:#3333FF;">Oskar Laverny </span><span style="color:lime;">22 seconds ago (2023-01-12)</span>
+* <span style="color:yellow;">fde936d</span><span style="color:yellow;"> (</span><span style="font-weight:bold;color:lime;">master</span><span style="color:yellow;">)</span> Fix error about XXX <span style="font-weight:bold;color:#3333FF;">Oskar Laverny </span><span style="color:lime;">4 minutes ago (2023-01-12)</span>
+* <span style="color:yellow;">b9f1617</span><span style="color:yellow;"> (</span><span style="font-weight:bold;color:yellow;">tag: v1.0</span><span style="color:yellow;">)</span> Fix a typo <span style="font-weight:bold;color:#3333FF;">Oskar Laverny </span><span style="color:lime;">15 minutes ago (2023-01-12)</span>
+* <span style="color:yellow;">3cb7e6c</span> Add proof of main Thm <span style="font-weight:bold;color:#3333FF;">Oskar Laverny </span><span style="color:lime;">15 minutes ago (2023-01-12)</span>
+* <span style="color:yellow;">88d916e</span> Add definition of XX <span style="font-weight:bold;color:#3333FF;">Oskar Laverny </span><span style="color:lime;">16 minutes ago (2023-01-12)</span>
+* <span style="color:yellow;">147a080</span> First commit <span style="font-weight:bold;color:#3333FF;">Oskar Laverny </span><span style="color:lime;">17 minutes ago (2023-01-12)</span>
+```
+
+Now both versions contain the error fix. You can of course do the same thing with more versions... 
+
+**Note:** References are mutable, but objects are not. Remark that the templating commit has a different hash !
+---
+
+
+# Ex. 3: The `git-latexdiff` magic
+
+The <a href="https://gitlab.com/git-latexdiff/git-latexdiff">git-latexdiff</a> tool allows to compile a diffed version of the latex document: 
+
+<img src="img/diff.png" alt="XKCD Comic" style="width: 100%" />
+
+---
+
+# Ex. 4: Github Actions
+
+<a href="https://github.com/features/actions">Github Actions</a> are a great way to automatize some repetitive tasks around the publication of a paper: 
+
+- Re-render completely the paper at each Commit
+- **Provide a fix url for the master's pdf**
+- Unit testing of your software
+- Compile latexdiffs for collaborators, yourself, or even reviewers automatically.  
+- Ensures constant reproducibility of your results through continuous integration
+
+If you end up doing something repetitively, then probably you should automatize it:
+
+- Less risk of error
+- The computer will not forget to do something, while you might. 
+
+---
+
+
+# Ex. 5: Using issues to discuss and collaborate. 
+
+If you are writing with more than one other person (remember than future-you count as one), then a Github repository on which everyone writes modifications is usually a good thing. Moreover: 
+
+- Issues can be used to **discuss potential modifications** together
+- **Written and asynchronous discussion** is a powerful way to collaborate.
+- Issues can be linked to commit messages for clearer retrospective and history. 
+
+
+**Known example** : <a href="https://github.com/HoTT/book">Textbook on informal homotopy type theory</a>; 600pages book written in 6 months by more than 20 people, an exemple of *efficient collaboration*. See Andrej Bauer's <a href="https://math.andrej.com/2013/06/20/the-hott-book/">blog post</a>.
+
+---
+
+# Doggy-bag 
+
+The key messages today are : 
+
+- **You probably already use some kind of version control**.
+- **Learning an efficient VCS such as git is probably worth your time**.
+- **Asynchronous written collaboration** is a very powerful way of co-writing papers and/or software. 
+
+### Thanks !
+
+Few ressources : 
+- [Missing Semester](https://www.youtube.com/@MissingSemester) *huge source for this talk* 
+- [Git in simple words](https://xosh.org/explain-git-in-simple-words/) *very nice to read*
+- [Pro git book](https://git-scm.com/book/fr/v2) *the best reference about git.* 
+- [Rcubed](https://r-cubed-v2.rostools.org/version-control.html) *a book with a nice chapter about verison control*
+- Blog posts about academic uses of git: [here](https://judgelord.github.io/PS811/3-git.html#1), [here](https://klb2.gitlab.io/latex/git/2020/11/19/latex-git.html) [](https://dev.to/azure/collaborate-on-research-papers-with-github-76e), [there](https://hackmd.io/@vivek-blog/github_article https://blogs.lse.ac.uk/impactofsocialsciences/2013/06/04/github-for-academics/) and [there](https://www.youtube.com/watch?v=6OkOmPqumWo) [](https://rvprasad.medium.com/a-git-workflow-for-writing-papers-in-latex-4cfb31be4b06)
+- [The HOTT book](https://math.andrej.com/2013/06/20/the-hott-book/) *a collaborative research story*
 
     </textarea>
     <script src="https://remarkjs.com/downloads/remark-latest.min.js">
