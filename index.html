@@ -149,7 +149,7 @@ More precisely:
 
 class: center, middle
 
-# Bottom-up introduction to Git
+# I. Bottom-up introduction to Git
 
 ---
 
@@ -270,12 +270,12 @@ end
 
 ## e156393cef8b62f30d58ca0eb37bf7a75221471e
 
-A **Sha1 hash** is a hexadecimal string of 40 characters, such as `e156393...71e`.
+A **Sha1 hash** is a hexadecimal string of 40 characters (160 bits), such as `e156393...71e`.
 
 - Sha1 is a **cryptographic hash function**: it is deterministic but chaotic
 - Gives a "unique" identifier to a commit, which is in "bijection" with its content.
 
-Sha1 names are really inconvenient. Thus git maintains a set of references: 
+**Problem: Sha1 names are really inconvenient.** Thus git maintains a set of references: 
 
 ```julia
 references = Dict{String,String}() # maps readable human names to sha1 hashes. 
@@ -289,7 +289,7 @@ We can now **refer to things by name** in the commit graph.
 
 ---
 
-# A small example
+# A few commands
 
 All git commands make additions to the DAG and/or modifications to the references: 
 
@@ -324,7 +324,7 @@ O <-- O <-- O <-- O <---- O (HEAD -> master)
 
 class: center, middle
 
-# Examples of application to academic work
+# II. Examples of application to academic work
 
 ---
 
@@ -399,16 +399,16 @@ Now both versions contain the error fix. You can of course do the same thing wit
 
 # Github & Github Actions (1/2)
 
-Github is a website that allows you to host git repositories and collaborate with others on the same projects. <a href="https://github.com/features/actions">Github Actions</a> are a great way to automatize some repetitive tasks around the publication of a paper: 
+Github is a website that allows you to host git repositories and collaborate with others on the same projects. <a href="https://github.com/features/actions">Github Actions</a> are a great way to automatize some repetitive tasks around academic projects:
 
-- Run the analysis and re-render the paper at each commit. 
-- Automatic testing and continuous integration of software. 
-- **Automatically compile stuff** for you and your collaborators, or even reviewers, with fixed urls for outputs. 
+- Run the analysis and re-render the paper at each commit.
+- Automatic testing and continuous integration of software.
+- **Automatically compile stuff** for you and your collaborators, or even reviewers, with **fixed urls** for outputs. 
 
-This type of **continuous integration** will ensures constant reproducibility of your results. If you end up doing something repetitively, then probably you should automatize it:
+This type of **continuous integration** will ensures **constant reproducibility** of your results. If you end up doing something repetitively, then probably you should automatize it:
 
 - Less risk of error
-- No more forgetting a step (e.g. forgetting to update a graph after chaging an hypothesis!) 
+- No more forgetting a step (e.g. forgetting to update a graph after changing its input!) 
 
 ---
 
@@ -418,7 +418,7 @@ The <a href="https://gitlab.com/git-latexdiff/git-latexdiff">git-latexdiff</a> t
 
 <img src="img/diff.png" alt="XKCD Comic" style="width: 80%" /> 
 
-*These latexdiff are also perfect to send back to reviewers... for exmple with a commit log!*
+*These latexdiff are also perfect to send back to reviewers... e.g. with a commit log!*
 
 ---
 
@@ -432,10 +432,16 @@ If more than one author is involved, then a Github repository on which everyone 
 - Issues can be used to **discuss potential modifications** together. They can be linked in commit messages for clearer retrospective and history. 
 - Pull request to **validate together changes before merging them**.
 
-** I personally advocate for written and asynchronous collaborative writting.** What is written never gets lost, and everyone can catch up easily. 
+**Written and asynchronous collaborative writting is neat.** What is written never gets lost, and everyone can catch up easily. 
 
 
-**Known example** : <a href="https://github.com/HoTT/book">Textbook on informal homotopy type theory</a>; 600pages book written in 6 months by more than 20 people, an exemple of *efficient collaboration*. See Andrej Bauer's <a href="https://math.andrej.com/2013/06/20/the-hott-book/">blog post</a>. More than 1000 issues and pull requests.
+**Known example** : <a href="https://github.com/HoTT/book">Textbook on informal homotopy type theory</a>
+- 600pages book
+- written by my than 20 people
+- in 6 months.
+- More than 1000 issues and PRs
+
+See Andrej Bauer's <a href="https://math.andrej.com/2013/06/20/the-hott-book/">blog post</a> about it.
 
 ---
 
@@ -445,7 +451,7 @@ If more than one author is involved, then a Github repository on which everyone 
 
 **No risk of loosing your work => Costless inovation.**
 
-*Branches are like soap: you should use them.* 
+*"Branches are like soap: you should use them."* 
 
 
 ## Exemple of automatic releases
@@ -455,7 +461,7 @@ I use Github actions to automatically build my resume on each commit:
 - Add a ref in `papers.bib` or `confs.bib` or another one, comit & push. 
 - Wait a little for it to compile `cv.pdf` and output at the fixed URL.
 
-**The link to output is fixed** so that the person cliking on it will always get the last verison.
+**The link to output is fixed** so that the person clicking on it will always get the last version.
 
 ---
 
@@ -463,7 +469,7 @@ I use Github actions to automatically build my resume on each commit:
 
 Your project and/or your personal website and/or projects websites can be hosted and compiled directly from source, online, and served as website. 
 
-<a href="https://pages.github.com/">Github Pages</a> allows you to pulish staticely generated websites such as blogs, documentations, applications of your packages, etc. A great way to communiate results that do not fit into the pdf standard. 
+<a href="https://pages.github.com/">Github Pages</a> allows you to pulish staticely generated websites such as blogs, documentations, applications of your packages, etc. A great way to communicate results that do not fit into the pdf standard (such as datasets and other stuff) with a permanent link. 
 
 ## JOSS
 
@@ -474,6 +480,24 @@ Your project and/or your personal website and/or projects websites can be hosted
 - Value your work via DOI and citability (also see <a href="https://zenodo.org/">Zenodo</a>)
 ---
 
+## Protection of research ideas. 
+
+You may add a licence to you project to ensure that the ideas developed in your paper are legally yours, including code and everything.
+
+The online version of the history proves that you wrote something at a certain time. **If you choose** to make the repo public before the article is published, then it can be argued on it. 
+
+
+## Post-publication peer-review
+
+Once your article is peer-reviewed, if it lives in a public github repository (and **it should**), you are oppened to post-publication peer-review: 
+
+- Anyone can come by and take a look, post a comment and propose modification. 
+- A new preprint can be produced if the modifications are important. 
+
+<a href="https://openreview.net/pdf?id=J0BgSIxpsSD">See there</a> for deeper developpement.
+
+
+---
 
 class: center, middle
 
