@@ -29,6 +29,7 @@ Feb. 17, 2023
 
 ---
 
+
 # Version Control ? 
 
 <script>
@@ -61,20 +62,6 @@ Feb. 17, 2023
   </div>
 </div>
 
-???
-
-Teasing comic but true
-
-Manuel VCS problems : 
-
-- difficult to find the change you want
-- difficult to understand what happened
-- collaboration is hard. 
-
-Collaboration : future you.
-
-Raise hands if experience with git or other version controls systems ? 
-
 ---
 
 
@@ -92,17 +79,10 @@ Why is it usefull :
 - **Allows you to maintain several concurrent versions of the project**
 
 
-**Remark**: Mailing is a valid but very manual VCS.
+**Remark**: Printing + red pen + Scan is primitive VCS. Mailing is a valid but very manual VCS. 
 
-???
+*but mailing is error prone, merging two versions is a mess...*
 
-Example of parallel development problem with mails : 
-
-- fixing an error while someone else review your code
-- fix get lost
-- fix again. 
-
-Printing + red pen + Scan is primitive collaboration. 
 
 ---
 
@@ -121,17 +101,6 @@ As academics, our work usually outputs a lot of plain text files:
 Academics usually value **reproducibility** of results. This requires that you provide others a way to... reproduce your results. 
 
 <b>A good VCS facilitates reproducibility</b> as it allows you and others to understand how the current result was made, and therefore faciliate drastically the reproduction of your results.
-
-???
-
-Consider again future-you as someone else. 
-
-A **yes** to one of these questions means you probably need VCS: 
-
-- Did you ever struggle to reproduce results (including yours) ? 
-- Do you usually hold several versions of the same work ? 
-- Do you ever modify a copy to keep the orginal safe *just in case* ? 
-- Did you ever deleted work and wish you had not ? 
 
 ---
 
@@ -170,17 +139,17 @@ More precisely:
     
     
     <b>Today's program:</b>  <br /><br />
-    I. Bottom-up introduction to Git<br /><br />
+    I. Bottom-up introduction to Git <em>(leaky astraction)</em><br /><br />
     II. Examples of application to academic work<br /><br />
   </div>
 </div>
 
-???
+---
 
-Git interface = leaky abstraction, learning top-down is not very good. Avoid to follow the approach of the comic. 
 
-Underlying design and ideas can be understood, instead of memorizing the interface. You'll understand what the commands do by understanding what they do to the data model. 
+class: center, middle
 
+# Bottom-up introduction to Git
 
 ---
 
@@ -237,14 +206,7 @@ O <-- O <-- O <-- O <---- O (both the proof and the notation fix are included)
              \          v
               --- O <-- O
 ```
-
-???
-
-o are commits (snapshots), and arrows are parenting. 
-
-Merge conflicts : 
-- handled automatically 
-- Tools to facilitate handling them otherwise.
+*merge conflicts facilitation..*
 
 ---
 
@@ -302,15 +264,7 @@ function load(objects,id)
 end
 ```
 
-???
-
-Rq : hash functon turn a big piece of data into a small string. They give you a way to name a thing deterministically on the content of the thing. 
-
-Rq : git implementation is mostly C, and some bash and perl scripts. 
-
-Blobs, trees and commits are unified: they are all objects.
-
-Looks like commits contains a lot of other comits, but everything is referenced by id (pointers) for efficiency: each object is stored on its own and refereces the others by their sha1-hash. 
+*Note: everything is referenced by id and not copied around..*
 
 ---
 
@@ -331,11 +285,11 @@ Ex: `fix_bug_in_proof`, `master`, `HEAD`, `v0.1`, `sudmitted_version` ...
 
 We can now **refer to things by name** in the commit graph. 
 
-**Remark**: The actual commit graph is immutable, but references are mutable. You can move the `fix_bug_in_proof` reference (while you cannot change hashes of already-done commits). 
+**Remark**: The actual commit graph is immutable, but references are mutable. In other words, you can move the `fix_bug_in_proof` reference, while you cannot change hashes of already-done commits. 
 
 ---
 
-# Example 1
+# A small example
 
 All git commands make additions to the DAG and/or modifications to the references: 
 
@@ -364,18 +318,18 @@ O <-- O <-- O <-- O <---- O (HEAD -> master)
 ---------------------------------------------------
 ```
 
-???
-
-Draw a graph on the board: 
-
-few commits and few references. 
-
 ---
 
 
 
+class: center, middle
 
-# Ex. 2: The templating problem (1/3)
+# Examples of application to academic work
+
+---
+
+
+# The templating problem (1/3)
 
 Say we finished working on a paper. 
 ```terminal 
@@ -395,7 +349,7 @@ Switched to a new branch 'templating'
 
 Now do stuff in that branch to comply with the requirements of the journal, and commit them. 
 ---
-# Ex. 2: The templating problem (2/3)
+# The templating problem (2/3)
 
 ```terminal 
 lrnv@laptop paper $ git lg
@@ -420,103 +374,110 @@ Now we send the version from the `templating` branch to the journal. While they 
 
 ---
 
-# Ex. 2: The templating problem (3/3)
+# The templating problem (3/3)
 
 ```terminal 
-lrnv@laptop paper $ git checkout templating
-Switched to branch 'templating'
-lrnv@laptop paper $ git rebase master
-Successfully rebased and updated refs/heads/templating.
-lrnv@laptop paper $ git lg 
-* <span style="color:yellow;">b9faeb0</span><span style="color:yellow;"> (</span><span style="font-weight:bold;color:aqua;">HEAD -&gt; </span><span style="font-weight:bold;color:lime;">templating</span><span style="color:yellow;">)</span> Comply with journal's XX template  <span style="font-weight:bold;color:#3333FF;">Oskar Laverny </span><span style="color:lime;">22 seconds ago (2023-01-12)</span>
-* <span style="color:yellow;">fde936d</span><span style="color:yellow;"> (</span><span style="font-weight:bold;color:lime;">master</span><span style="color:yellow;">)</span> Fix error about XXX <span style="font-weight:bold;color:#3333FF;">Oskar Laverny </span><span style="color:lime;">4 minutes ago (2023-01-12)</span>
-* <span style="color:yellow;">b9f1617</span><span style="color:yellow;"> (</span><span style="font-weight:bold;color:yellow;">tag: v1.0</span><span style="color:yellow;">)</span> Fix a typo <span style="font-weight:bold;color:#3333FF;">Oskar Laverny </span><span style="color:lime;">15 minutes ago (2023-01-12)</span>
-* <span style="color:yellow;">3cb7e6c</span> Add proof of main Thm <span style="font-weight:bold;color:#3333FF;">Oskar Laverny </span><span style="color:lime;">15 minutes ago (2023-01-12)</span>
-* <span style="color:yellow;">88d916e</span> Add definition of XX <span style="font-weight:bold;color:#3333FF;">Oskar Laverny </span><span style="color:lime;">16 minutes ago (2023-01-12)</span>
-* <span style="color:yellow;">147a080</span> First commit <span style="font-weight:bold;color:#3333FF;">Oskar Laverny </span><span style="color:lime;">17 minutes ago (2023-01-12)</span>
+lrnv@laptop paper $ git checkout templating && git merge master && git lg
+* <span style="color:yellow;">b9faeb0</span><span style="color:yellow;"> (</span><span style="font-weight:bold;color:aqua;">HEAD -&gt; </span><span style="font-weight:bold;color:lime;">templating</span><span style="color:yellow;">)</span> Merge commit  <span style="font-weight:bold;color:#3333FF;">Oskar Laverny </span><span style="color:lime;">1 seconds ago (2023-01-12)</span>
+<span style="color:red;">|</span><span style="color:green;">\</span>  
+* <span style="color:green;">|</span> <span style="color:yellow;">fde936d</span><span style="color:yellow;"> (</span><span style="font-weight:bold;color:aqua;">HEAD -&gt; </span><span style="font-weight:bold;color:lime;">master</span><span style="color:yellow;">)</span> Fix error about XXX <span style="font-weight:bold;color:#3333FF;">Oskar Laverny </span><span style="color:lime;">23 seconds ago (2023-01-12)</span>
+<span style="color:red;">|</span> * <span style="color:yellow;">d380354</span> Comply with journal's XX template <span style="font-weight:bold;color:#3333FF;">Oskar Laverny </span><span style="color:lime;">4 minutes ago (2023-01-12)</span>
+<span style="color:red;">|</span><span style="color:green;">/</span>  
+* <span style="color:yellow;">b9f1617</span><span style="color:yellow;"> (</span><span style="font-weight:bold;color:yellow;">tag: v1.0</span><span style="color:yellow;">)</span> Fix a typo <span style="font-weight:bold;color:#3333FF;">Oskar Laverny </span><span style="color:lime;">11 minutes ago (2023-01-12)</span>
+* <span style="color:yellow;">3cb7e6c</span> Add proof of main Thm <span style="font-weight:bold;color:#3333FF;">Oskar Laverny </span><span style="color:lime;">12 minutes ago (2023-01-12)</span>
+* <span style="color:yellow;">88d916e</span> Add definition of XX <span style="font-weight:bold;color:#3333FF;">Oskar Laverny </span><span style="color:lime;">12 minutes ago (2023-01-12)</span>
+* <span style="color:yellow;">147a080</span> First commit <span style="font-weight:bold;color:#3333FF;">Oskar Laverny </span><span style="color:lime;">13 minutes ago (2023-01-12)</span>
+
+
+
 ```
 
 Now both versions contain the error fix. You can of course do the same thing with more versions... 
 
-**Remaind that** references are mutable, but objects are not. Remark that the templating commit has a different hash !
+**Remind** that references are mutable, but objects are not. The hashes of each commits are still exactly the sames, but references have moved and the DAG was updated. 
 ---
 
-# Ex. 3: Github Actions
+# Github & Github Actions (1/2)
 
-<a href="https://github.com/features/actions">Github Actions</a> are a great way to automatize some repetitive tasks around the publication of a paper: 
+Github is a website that allows you to host git repositories and collaborate with others on the same projects. <a href="https://github.com/features/actions">Github Actions</a> are a great way to automatize some repetitive tasks around the publication of a paper: 
 
 - Run the analysis and re-render the paper at each commit. 
-- Provide a fixed URL for the output to distribute it. 
 - Automatic testing and continuous integration of software. 
-- Automatically compile stuff for you and your collaborators, or even reviewers.  
-- Ensures constant reproducibility of your results through continuous integration
+- **Automatically compile stuff** for you and your collaborators, or even reviewers, with fixed urls for outputs. 
 
-If you end up doing something repetitively, then probably you should automatize it:
+This type of **continuous integration** will ensures constant reproducibility of your results. If you end up doing something repetitively, then probably you should automatize it:
 
 - Less risk of error
-- No more forgetting a step (e.g. forgetting to update a graph !) 
+- No more forgetting a step (e.g. forgetting to update a graph after chaging an hypothesis!) 
 
 ---
 
-# Ex. 3.1: `git-latexdiff` magic
+# Github Actions & latexdiff (2/2)
 
 The <a href="https://gitlab.com/git-latexdiff/git-latexdiff">git-latexdiff</a> tool allows to compile a diffed version of the latex document. It can be done online directly at each commit to track changes on the go: 
 
-<img src="img/diff.png" alt="XKCD Comic" style="width: 80%" />
+<img src="img/diff.png" alt="XKCD Comic" style="width: 80%" /> 
+
+*These latexdiff are also perfect to send back to reviewers... for exmple with a commit log!*
 
 ---
 
 
 
 
-# Ex. 4: Using issues to discuss and collaborate. 
+# Using issues to discuss and collaborate. 
 
 If more than one author is involved, then a Github repository on which everyone writes modifications is usually a good thing. Github repo comes with a discussion area:  
 
 - Issues can be used to **discuss potential modifications** together. They can be linked in commit messages for clearer retrospective and history. 
 - Pull request to **validate together changes before merging them**.
-- **Written and asynchronous discussion** is a powerful way to collaborate.
+
+** I personally advocate for written and asynchronous collaborative writting.** What is written never gets lost, and everyone can catch up easily. 
 
 
 **Known example** : <a href="https://github.com/HoTT/book">Textbook on informal homotopy type theory</a>; 600pages book written in 6 months by more than 20 people, an exemple of *efficient collaboration*. See Andrej Bauer's <a href="https://math.andrej.com/2013/06/20/the-hott-book/">blog post</a>. More than 1000 issues and pull requests.
 
-???
-
-Asynchronous written collaboration is a lot better than oral meetings: 
-
-- everyone can see what happened, and can re-read why. 
-- nothing gets lots in your memory. 
-
 ---
 
-## Ex. 5: Github Pages
+## Cost-free experimentation
 
-Your project and/or your personal website and/or projects websites can be hosted and compiled directly from source, online, and served as website. 
+**Branching out** is a neat way of experimenting, e.g. a large refactoring of notations, without loosing what you already have.
 
-<a href="https://pages.github.com/">Github Pages</a> allows you to pulish staticely generated websites such as blogs, documentations, applications of your packages, etc. A great way to communiate results that do not fit into the pdf standard. 
+**No risk of loosing your work => Costless inovation.**
 
-## Ex. 6: JOSS
+*Branches are like soap: you should use them.* 
 
-<a href="https://joss.theoj.org/">JOSS</a> is a journal that **review and publishes code**, entirely based on GitHub. If you consider your code as part of your research outputs, then a JOSS review process is a great way to have this code reviewed by peers, publicly challenged, corrected... and published. A JOSS publication has a formal DOI attached to it, and can then be cited. 
 
----
+## Exemple of automatic releases
 
-## Ex. 7: Automatic releases
-
-Github has the capacity to automatically produce and serve outputs on each modification to a repository. I use it to build my resume: 
+I use Github actions to automatically build my resume on each commit: 
 
 - Add a ref in `papers.bib` or `confs.bib` or another one, comit & push. 
 - Wait a little for it to compile `cv.pdf` and output at the fixed URL.
 
 **The link to output is fixed** so that the person cliking on it will always get the last verison.
 
-## Ex. 8: Cost-free experimentation
+---
 
-**Branching out** is a neat way of experimenting, e.g. a large refactoring of notations, without loosing what you already have.
+## Github Pages
 
-**No risk of loosing your work => Costless inovation.**
+Your project and/or your personal website and/or projects websites can be hosted and compiled directly from source, online, and served as website. 
 
-*Branches are like soap: you should use them*. 
+<a href="https://pages.github.com/">Github Pages</a> allows you to pulish staticely generated websites such as blogs, documentations, applications of your packages, etc. A great way to communiate results that do not fit into the pdf standard. 
+
+## JOSS
+
+<a href="https://joss.theoj.org/">JOSS</a> is a journal that **review and publishes code**, entirely based on GitHub.
+
+- Get a deep review of your technical code
+- Dont write paper about code you already wrote.
+- Value your work via DOI and citability (also see <a href="https://zenodo.org/">Zenodo</a>)
+---
+
+
+class: center, middle
+
+# Conclusion
 
 ---
 
