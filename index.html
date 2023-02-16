@@ -87,7 +87,7 @@ Data is tracked as a list of **snapshots**, which also contains **metadata**.
 Why is it usefull :
 - Permits collaborative development
 - Efficient for all projects sizes
-- Automatically answer hard questions : who, when, why ? bisection ? 
+- Automatically answer hard questions : who, when, why ? Bisection ? 
 - **Allows you to revert any changes and go back to a previous state**
 - **Allows you to maintain several concurrent versions of the project**
 
@@ -96,7 +96,7 @@ Why is it usefull :
 
 ???
 
-Exemple of parallell developpement problem with mails : 
+Example of parallel development problem with mails : 
 
 - fixing an error while someone else review your code
 - fix get lost
@@ -386,14 +386,14 @@ lrnv@laptop paper $ git lg
 * <span style="color:yellow;">147a080</span> First commit <span style="font-weight:bold;color:#3333FF;">Oskar Laverny </span><span style="color:lime;">5 minutes ago (2023-01-12)</span>
 ```
 
-The current verison, tagged `v1.0`, will be the version we push to `arXiv` and send to review. But the paper requires that we send a version to review with specific notations, templating, etc... **Use a branch:**
+The current version, tagged `v1.0`, will be the version we push to `arXiv` and send to review. But the paper requires that we send a version to review with specific notations, templating, etc... **Use a branch:**
 
 ```terminal 
 lrnv@laptop paper $ git checkout -b templating
 Switched to a new branch 'templating'
 ```
 
-Now do stuff in that branch to comply with the requirements of the journal, and comit them. 
+Now do stuff in that branch to comply with the requirements of the journal, and commit them. 
 ---
 # Ex. 2: The templating problem (2/3)
 
@@ -447,7 +447,7 @@ Now both versions contain the error fix. You can of course do the same thing wit
 
 - Run the analysis and re-render the paper at each commit. 
 - Provide a fixed URL for the output to distribute it. 
-- Automatic testing and continuous integation of software. 
+- Automatic testing and continuous integration of software. 
 - Automatically compile stuff for you and your collaborators, or even reviewers.  
 - Ensures constant reproducibility of your results through continuous integration
 
