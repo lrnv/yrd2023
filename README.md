@@ -1,1 +1,1 @@
-Slides are seeable there : https://lrnv/github.io/yrd2023
+Slides are seeable there : https://lrnv.github.io/yrd2023
